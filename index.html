@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Under Maintenance</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark light">
+  <meta name="theme-color" content="#0b1220" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="robots" content="noindex, nofollow">
+  <style>
+    :root {
+      --bg-1: #0b1220;
+      --bg-2: #111827;
+      --accent: #7c3aed;
+      --accent-2: #06b6d4;
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+      --card-bg: rgba(255,255,255,0.08);
+      --card-border: rgba(255,255,255,0.18);
+      --shadow: 0 10px 30px rgba(2, 6, 23, 0.6);
+    }
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg-1: #f8fafc;
+        --bg-2: #eef2ff;
+        --accent: #2563eb;
+        --accent-2: #14b8a6;
+        --text: #0f172a;
+        --muted: #334155;
+        --card-bg: rgba(255,255,255,0.6);
+        --card-border: rgba(15, 23, 42, 0.1);
+        --shadow: 0 10px 30px rgba(2, 6, 23, 0.08);
+      }
+    }
+
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--text);
+      background:
+        radial-gradient(1200px 800px at -10% -10%, rgba(124, 58, 237, 0.25), transparent 60%),
+        radial-gradient(1200px 800px at 110% 110%, rgba(20, 184, 166, 0.25), transparent 60%),
+        linear-gradient(180deg, var(--bg-1), var(--bg-2));
+      background-attachment: fixed;
+      animation: floatBg 16s ease-in-out infinite alternate;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        radial-gradient(1px 1px at 25% 13%, rgba(255,255,255,0.06) 50%, transparent 51%),
+        radial-gradient(1px 1px at 52% 72%, rgba(0,0,0,0.06) 50%, transparent 51%),
+        radial-gradient(1px 1px at 10% 83%, rgba(0,0,0,0.05) 50%, transparent 51%);
+      background-size: 200px 200px, 260px 260px, 320px 320px;
+      mix-blend-mode: soft-light;
+    }
+
+    .wrap {
+      min-height: 100%;
+      display: grid;
+      place-items: center;
+      padding: 4rem 1rem;
+    }
+
+    .card {
+      position: relative;
+      width: min(650px, 92vw);
+      padding: 2.5rem;
+      border-radius: 20px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px) saturate(140%);
+      -webkit-backdrop-filter: blur(18px) saturate(140%);
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      border-radius: inherit;
+      padding: 2px;
+      background: conic-gradient(from 0deg, var(--accent), var(--accent-2), var(--accent));
+      -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+              mask-composite: exclude;
+      animation: spin 8s linear infinite;
+      opacity: 0.35;
+      pointer-events: none;
+    }
+
+    h1 {
+      margin: 0 0 0.5rem 0;
+      font-size: clamp(2rem, 3.6vw + 1rem, 3rem);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      text-shadow: 0 0 20px color-mix(in oklab, var(--accent) 30%, transparent);
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+    }
+
+    .tag .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 30%, white 0 20%, var(--accent) 21% 100%);
+      box-shadow: 0 0 14px color-mix(in oklab, var(--accent) 60%, transparent);
+    }
+
+    p.lead {
+      margin: 0 0 1.5rem 0;
+      font-size: 1.05rem;
+      color: var(--muted);
+    }
+
+    .row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 1.75rem;
+    }
+
+    .spinner {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background:
+        conic-gradient(from 0deg, color-mix(in oklab, var(--accent) 85%, transparent) 0 25%, transparent 25% 100%);
+      mask: radial-gradient(farthest-side, transparent 64%, #000 65%);
+      -webkit-mask: radial-gradient(farthest-side, transparent 64%, #000 65%);
+      animation: spin 1s linear infinite;
+      flex: none;
+      filter: drop-shadow(0 0 18px color-mix(in oklab, var(--accent) 70%, transparent));
+    }
+
+    .pill {
+      padding: 0.75rem 1rem;
+      border-radius: 999px;
+      border: 1px solid var(--card-border);
+      background: color-mix(in oklab, var(--card-bg) 70%, transparent);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.95rem;
+    }
+
+    .pill .pulse {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--accent-2);
+      box-shadow:
+        0 0 0 0 color-mix(in oklab, var(--accent-2) 60%, transparent),
+        0 0 0 6px transparent;
+      animation: pulse 2.4s ease-out infinite;
+    }
+
+    footer {
+      margin-top: 1.25rem;
+      font-size: 0.9rem;
+      color: var(--muted);
+      opacity: 0.9;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(1turn); }
+    }
+    @keyframes floatBg {
+      0%   { background-position: 0% 0%, 100% 100%, 0 0; }
+      100% { background-position: 15% 10%, 85% 90%, 0 0; }
+    }
+    @keyframes pulse {
+      0% {
+        box-shadow:
+          0 0 0 0 color-mix(in oklab, var(--accent-2) 60%, transparent),
+          0 0 0 6px transparent;
+      }
+      70% {
+        box-shadow:
+          0 0 0 10px transparent,
+          0 0 0 16px transparent;
+      }
+      100% {
+        box-shadow:
+          0 0 0 0 transparent,
+          0 0 0 0 transparent;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .row { gap: 0.75rem; }
+      .spinner { width: 44px; height: 44px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="card" role="status" aria-live="polite">
+      <div class="tag"><span class="dot"></span><span>Service status: Maintenance</span></div>
+      <h1>We will be right back</h1>
+      <p class="lead">Our site is undergoing a brief upgrade to bring a faster, sleeker experience.</p>
+
+      <div class="row">
+        <div class="spinner" aria-hidden="true"></div>
+        <div class="pill">
+          <span class="pulse"></span>
+          <span>Auto‑refresh when live</span>
+        </div>
+      </div>
+
+      <footer>Thanks for the patience — this page updates automatically when maintenance completes.</footer>
+    </section>
+    <noscript>
+      <p style="text-align:center; color: var(--muted);">This page uses gentle animations; functionality works without JavaScript.</p>
+    </noscript>
+  </main>
+  <script>
+    // Optional: auto-refresh every 5 minutes in case the site comes back
+    setInterval(function() {
+      fetch(window.location.href, { cache: 'no-store' }).then(function() {
+        // If the site is redeployed, a hard refresh will show the new content
+        // window.location.reload();
+      });
+    }, 300000);
+  </script>
+</body>
+</html>
