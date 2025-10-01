@@ -36,10 +36,10 @@ document.addEventListener("DOMContentLoaded", () => {
         if (typeof particlesJS !== 'undefined') {
             particlesJS('particles-js', {
                 "particles": { 
-                    "number": { "value": 100, "density": { "enable": true, "value_area": 800 } }, 
+                    "number": { "value": 120, "density": { "enable": true, "value_area": 800 } }, 
                     "color": { "value": "#ffffff" }, 
                     "shape": { "type": "circle" }, 
-                    "opacity": { "value": 0.3, "random": false }, 
+                    "opacity": { "value": 0.5, "random": false }, 
                     "size": { "value": 3, "random": true }, 
                     "line_linked": { "enable": true, "distance": 150, "color": "#ffffff", "opacity": 0.6, "width": 1 }, 
                     "move": { "enable": true, "speed": 2, "direction": "none", "out_mode": "out" } 
@@ -87,6 +87,27 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         });
     };
+    
+    // ADDED: New function for experience accordion
+    const initExperienceAccordion = () => {
+        const headers = document.querySelectorAll('.timeline-header');
+        headers.forEach(header => {
+            header.addEventListener('click', () => {
+                const content = header.closest('.timeline-content');
+                const isOpen = content.classList.contains('open');
+
+                // Close all other items
+                document.querySelectorAll('.timeline-content').forEach(item => {
+                    item.classList.remove('open');
+                });
+
+                // If the clicked item was not already open, open it
+                if (!isOpen) {
+                    content.classList.add('open');
+                }
+            });
+        });
+    };
 
     // Initialize all functionalities
     initMouseAura();
@@ -95,4 +116,5 @@ document.addEventListener("DOMContentLoaded", () => {
     initTyped();
     initScrollReveal();
     initScrollSpy();
+    initExperienceAccordion(); // Call the new function
 });

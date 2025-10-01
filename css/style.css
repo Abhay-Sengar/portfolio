@@ -160,26 +160,25 @@ body.sidebar-collapsed .sidebar-links { overflow-y: hidden; }
     50% { transform: translateY(-20px) translateX(5px); } 
     100% { transform: translateY(0px) translateX(0px); }
 }
-
-/* MODIFIED: Replaced with your provided logo styles */
-.logo-1 { top: 15%; left: 10%; width: 90px; height: 90px; animation-delay: -2s; animation-duration: 7s; }
-.logo-2 { top: 25%; right: 12%; width: 70px; height: 70px; animation-delay: 0s; animation-duration: 6s; }
+/* MODIFIED: Pulled logos away from the edges */
+.logo-1 { top: 15%; left: 15%; width: 90px; height: 90px; animation-delay: -2s; animation-duration: 7s; }
+.logo-2 { top: 25%; right: 15%; width: 70px; height: 70px; animation-delay: 0s; animation-duration: 6s; }
 .logo-3 { top: 65%; left: 20%; width: 80px; height: 80px; animation-delay: -5s; animation-duration: 8s; }
 .logo-4 { top: 70%; right: 25%; width: 100px; height: 100px; animation-delay: -1s; animation-duration: 5.5s; }
-.logo-5 { bottom: 10%; right: 40%; width: 60px; height: 60px; animation-delay: -3s; animation-duration: 7.5s; }
-.logo-6 { bottom: 10%; left: 8%; width: 75px; height: 75px; animation-delay: -4s; animation-duration: 6.5s; }
+.logo-5 { bottom: 15%; right: 40%; width: 60px; height: 60px; animation-delay: -3s; animation-duration: 7.5s; }
+.logo-6 { bottom: 15%; left: 12%; width: 75px; height: 75px; animation-delay: -4s; animation-duration: 6.5s; }
 .logo-7 { bottom: 15%; left: 45%; width: 90px; height: 90px; animation-delay: -1.5s; animation-duration: 8.2s; }
-.logo-8 { top: 50%; left: 8%; width: 70px; height: 70px; animation-delay: -6s; animation-duration: 5.8s; }
-.logo-9 { top: 10%; right: 30%; width: 100px; height: 100px; animation-delay: -0.5s; animation-duration: 5.2s; }
+.logo-8 { top: 50%; left: 12%; width: 70px; height: 70px; animation-delay: -6s; animation-duration: 5.8s; }
+.logo-9 { top: 15%; right: 30%; width: 100px; height: 100px; animation-delay: -0.5s; animation-duration: 5.2s; }
 .logo-10 { bottom: 30%; right: 15%; width: 85px; height: 85px; animation-delay: -2.5s; animation-duration: 7.3s; }
-.logo-11 { top: 55%; right: 5%; width: 70px; height: 70px; animation-delay: -3.5s; animation-duration: 6.2s; }
+.logo-11 { top: 55%; right: 10%; width: 70px; height: 70px; animation-delay: -3.5s; animation-duration: 6.2s; }
 .logo-12 { top: 20%; left: 35%; width: 90px; height: 90px; animation-delay: -5.5s; animation-duration: 7.8s; }
 
 
 #about .container {
     display: flex;
     justify-content: center;
-    flex-direction: column; /* MODIFIED: Ensures title is on top */
+    flex-direction: column;
 }
 .about-layout {
     display: inline-flex;
@@ -187,7 +186,7 @@ body.sidebar-collapsed .sidebar-links { overflow-y: hidden; }
     position: relative;
     gap: 0;
     padding-right: 60px;
-    margin: 0 auto; /* MODIFIED: Centers the inline-flex block */
+    margin: 0 auto;
 }
 .about-profile-pic {
     width: 200px;
@@ -238,13 +237,26 @@ body.sidebar-collapsed .sidebar-links { overflow-y: hidden; }
     bottom: 15%;
 }
 
-.timeline { position: relative; max-width: 750px; margin: 0 auto; padding-left: 2rem; }
-.timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background-color: rgba(255, 255, 255, 0.1); }
-.timeline-item { position: relative; margin-bottom: 2rem; }
-.timeline-dot { position: absolute; left: -9px; top: 5px; width: 20px; height: 20px; background-color: var(--clr-bg-dark); border: 3px solid var(--clr-primary); border-radius: 50%; }
-.timeline-content { padding: 1.5rem; }
-.timeline-content ul { padding-left: 1rem; list-style-type: '› '; }
-.timeline-content ul li { padding-left: 0.5rem; margin-bottom: 0.5rem;}
+/* MODIFIED: Final Experience Timeline Styles */
+.timeline { position: relative; max-width: 900px; margin: 0 auto; padding-left: 35px; }
+.timeline::before { content: ''; position: absolute; left: 3.5%; top: 0; bottom: 0; width: 8px; background-color: rgba(255, 255, 255, 0.3); border-radius: 4px; }
+.timeline-item { position: relative; padding-left: 85px; margin-bottom: 2rem; }
+/* .timeline-item:last-child::before { content: ''; position: absolute; left: 31px; top: 35px; bottom: -2rem; width: 8px; background: var(--clr-bg-dark); z-index: 1;} */
+.timeline-logo { position: fixed; left: -3.75%; top: 0; width: 65px; height: 65px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 10px rgba(0,0,0,0.2); z-index: 2;}
+.timeline-logo img { width: 70%; height: 70%; object-fit: contain; }
+.timeline-dot { position: absolute; left: 25px; top: 22.5px; width: 20px; height: 20px; background-color: var(--clr-bg-dark); border: 4px solid var(--clr-primary); border-radius: 50%; z-index: 3; }
+.timeline-date { margin-bottom: 1rem; color: var(--clr-text-bold); font-size: 0.9rem; padding-left: 20px; }
+.timeline-content { padding: 0; }
+.timeline-header { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem; cursor: pointer; }
+.timeline-header h3 { font-size: 1.2rem; }
+.timeline-header h4 { font-size: 1rem; color: var(--clr-text-muted); font-weight: 400;}
+.timeline-header i { font-size: 1.2rem; transition: transform 0.4s ease; }
+.timeline-content.open .timeline-header i { transform: rotate(180deg); }
+.timeline-details { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-out; padding: 0 1.5rem; }
+.timeline-content.open .timeline-details { max-height: 1000px; transition: max-height 0.7s ease-in; }
+.timeline-details ul { padding-left: 1rem; list-style-type: '› '; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1.5rem; margin-bottom: 1.5rem;}
+.timeline-details ul li { padding-left: 0.5rem; margin-bottom: 0.75rem;}
+
 
 .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
 .skill-category { padding: 1.5rem; }
@@ -310,4 +322,7 @@ body.sidebar-collapsed .sidebar-links { overflow-y: hidden; }
     #sidebar-toggle { position: fixed; top: 1rem; left: 1rem; z-index: 1001; background: rgba(30, 41, 59, 0.8); border-radius: 50%; width: 50px; height: 50px; }
     body.sidebar-expanded #sidebar-toggle { left: calc(var(--sidebar-width-expanded) + 1rem); }
     .floating-logos-container { display: none; }
+    .timeline { margin-left: 45px; }
+    .timeline-item { padding-left: 45px; }
+    .timeline-logo { left: -55px; }
 }
