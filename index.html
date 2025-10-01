@@ -1,247 +1,226 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Under Maintenance</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="color-scheme" content="dark light">
-  <meta name="theme-color" content="#0b1220" media="(prefers-color-scheme: dark)">
-  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
-  <meta name="robots" content="noindex, nofollow">
-  <style>
-    :root {
-      --bg-1: #0b1220;
-      --bg-2: #111827;
-      --accent: #7c3aed;
-      --accent-2: #06b6d4;
-      --text: #e5e7eb;
-      --muted: #94a3b8;
-      --card-bg: rgba(255,255,255,0.08);
-      --card-border: rgba(255,255,255,0.18);
-      --shadow: 0 10px 30px rgba(2, 6, 23, 0.6);
-    }
-    @media (prefers-color-scheme: light) {
-      :root {
-        --bg-1: #f8fafc;
-        --bg-2: #eef2ff;
-        --accent: #2563eb;
-        --accent-2: #14b8a6;
-        --text: #0f172a;
-        --muted: #334155;
-        --card-bg: rgba(255,255,255,0.6);
-        --card-border: rgba(15, 23, 42, 0.1);
-        --shadow: 0 10px 30px rgba(2, 6, 23, 0.08);
-      }
-    }
-
-    html, body { height: 100%; }
-    body {
-      margin: 0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
-      color: var(--text);
-      background:
-        radial-gradient(1200px 800px at -10% -10%, rgba(124, 58, 237, 0.25), transparent 60%),
-        radial-gradient(1200px 800px at 110% 110%, rgba(20, 184, 166, 0.25), transparent 60%),
-        linear-gradient(180deg, var(--bg-1), var(--bg-2));
-      background-attachment: fixed;
-      animation: floatBg 16s ease-in-out infinite alternate;
-    }
-
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      background-image:
-        radial-gradient(1px 1px at 25% 13%, rgba(255,255,255,0.06) 50%, transparent 51%),
-        radial-gradient(1px 1px at 52% 72%, rgba(0,0,0,0.06) 50%, transparent 51%),
-        radial-gradient(1px 1px at 10% 83%, rgba(0,0,0,0.05) 50%, transparent 51%);
-      background-size: 200px 200px, 260px 260px, 320px 320px;
-      mix-blend-mode: soft-light;
-    }
-
-    .wrap {
-      min-height: 100%;
-      display: grid;
-      place-items: center;
-      padding: 4rem 1rem;
-    }
-
-    .card {
-      position: relative;
-      width: min(650px, 92vw);
-      padding: 2.5rem;
-      border-radius: 20px;
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(18px) saturate(140%);
-      -webkit-backdrop-filter: blur(18px) saturate(140%);
-      overflow: hidden;
-    }
-
-    .card::before {
-      content: "";
-      position: absolute;
-      inset: -2px;
-      border-radius: inherit;
-      padding: 2px;
-      background: conic-gradient(from 0deg, var(--accent), var(--accent-2), var(--accent));
-      -webkit-mask:
-        linear-gradient(#000 0 0) content-box,
-        linear-gradient(#000 0 0);
-      -webkit-mask-composite: xor;
-              mask-composite: exclude;
-      animation: spin 8s linear infinite;
-      opacity: 0.35;
-      pointer-events: none;
-    }
-
-    h1 {
-      margin: 0 0 0.5rem 0;
-      font-size: clamp(2rem, 3.6vw + 1rem, 3rem);
-      line-height: 1.1;
-      letter-spacing: -0.02em;
-      text-shadow: 0 0 20px color-mix(in oklab, var(--accent) 30%, transparent);
-    }
-
-    .tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.6rem;
-      font-size: 0.95rem;
-      color: var(--muted);
-      margin-bottom: 1.25rem;
-    }
-
-    .tag .dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 999px;
-      background: radial-gradient(circle at 30% 30%, white 0 20%, var(--accent) 21% 100%);
-      box-shadow: 0 0 14px color-mix(in oklab, var(--accent) 60%, transparent);
-    }
-
-    p.lead {
-      margin: 0 0 1.5rem 0;
-      font-size: 1.05rem;
-      color: var(--muted);
-    }
-
-    .row {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-      margin-top: 1.75rem;
-    }
-
-    .spinner {
-      width: 52px;
-      height: 52px;
-      border-radius: 50%;
-      background:
-        conic-gradient(from 0deg, color-mix(in oklab, var(--accent) 85%, transparent) 0 25%, transparent 25% 100%);
-      mask: radial-gradient(farthest-side, transparent 64%, #000 65%);
-      -webkit-mask: radial-gradient(farthest-side, transparent 64%, #000 65%);
-      animation: spin 1s linear infinite;
-      flex: none;
-      filter: drop-shadow(0 0 18px color-mix(in oklab, var(--accent) 70%, transparent));
-    }
-
-    .pill {
-      padding: 0.75rem 1rem;
-      border-radius: 999px;
-      border: 1px solid var(--card-border);
-      background: color-mix(in oklab, var(--card-bg) 70%, transparent);
-      display: inline-flex;
-      align-items: center;
-      gap: 0.6rem;
-      font-size: 0.95rem;
-    }
-
-    .pill .pulse {
-      width: 10px;
-      height: 10px;
-      border-radius: 999px;
-      background: var(--accent-2);
-      box-shadow:
-        0 0 0 0 color-mix(in oklab, var(--accent-2) 60%, transparent),
-        0 0 0 6px transparent;
-      animation: pulse 2.4s ease-out infinite;
-    }
-
-    footer {
-      margin-top: 1.25rem;
-      font-size: 0.9rem;
-      color: var(--muted);
-      opacity: 0.9;
-    }
-
-    @keyframes spin {
-      to { transform: rotate(1turn); }
-    }
-    @keyframes floatBg {
-      0%   { background-position: 0% 0%, 100% 100%, 0 0; }
-      100% { background-position: 15% 10%, 85% 90%, 0 0; }
-    }
-    @keyframes pulse {
-      0% {
-        box-shadow:
-          0 0 0 0 color-mix(in oklab, var(--accent-2) 60%, transparent),
-          0 0 0 6px transparent;
-      }
-      70% {
-        box-shadow:
-          0 0 0 10px transparent,
-          0 0 0 16px transparent;
-      }
-      100% {
-        box-shadow:
-          0 0 0 0 transparent,
-          0 0 0 0 transparent;
-      }
-    }
-
-    @media (max-width: 420px) {
-      .row { gap: 0.75rem; }
-      .spinner { width: 44px; height: 44px; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      * { animation: none !important; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abhay Pratap Singh | Software & Cybersecurity</title>
+    <meta name="description" content="Portfolio of Abhay Pratap Singh, a Scientist at C-DOT and researcher specializing in high-performance software development, cybersecurity, and AI/ML.">
+    
+    <link rel="icon" href="https://avatars.githubusercontent.com/u/74212437?v=4" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <main class="wrap">
-    <section class="card" role="status" aria-live="polite">
-      <div class="tag"><span class="dot"></span><span>Service status: Maintenance</span></div>
-      <h1>We will be right back</h1>
-      <p class="lead">Our site is undergoing a brief upgrade to bring a faster, sleeker experience.</p>
 
-      <div class="row">
-        <div class="spinner" aria-hidden="true"></div>
-        <div class="pill">
-          <span class="pulse"></span>
-          <span>Auto‑refresh when live</span>
+    <div id="cursor-blob"></div>
+    <div id="particles-js"></div>
+
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <img src="assets/images/profile.jpg" alt="Abhay Pratap Singh" class="sidebar-pfp">
+            <div class="sidebar-title">
+                <span class="logo-text">APS</span>
+                <!-- <span class="full-name">Abhay Pratap Singh</span> -->
+            </div>
         </div>
-      </div>
+        <ul class="sidebar-links">
+            <li><a href="#hero" class="active"><i class="fas fa-home"></i><span class="link-text">Home</span></a></li>
+            <li><a href="#about"><i class="fas fa-user"></i><span class="link-text">About</span></a></li>
+            <li><a href="#experience"><i class="fas fa-briefcase"></i><span class="link-text">Experience</span></a></li>
+            <li><a href="#skills"><i class="fas fa-cogs"></i><span class="link-text">Skills</span></a></li>
+            <li><a href="#projects"><i class="fas fa-laptop-code"></i><span class="link-text">Publications</span></a></li>
+            <li><a href="#certifications"><i class="fas fa-certificate"></i><span class="link-text">Certifications</span></a></li>
+            <li><a href="#testimonials"><i class="fas fa-comment-dots"></i><span class="link-text">Testimonials</span></a></li>
+            <li><a href="#achievements"><i class="fas fa-trophy"></i><span class="link-text">Achievements</span></a></li>
+            <li><a href="#trainings"><i class="fas fa-chalkboard-teacher"></i><span class="link-text">Trainings & MOOCs</span></a></li>
+            <li><a href="#contact"><i class="fas fa-paper-plane"></i><span class="link-text">Contact</span></a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <button id="sidebar-toggle" aria-label="Toggle Sidebar"><i class="fas fa-chevron-left"></i></button>
+        </div>
+    </nav>
+    
+    <main class="main-content">
+        <section id="hero" class="hero">
+            <div class="floating-logos-container">
+                <div class="floating-logo logo-1"><img src="assets/logos/python.png" alt="Python"></div>
+                <div class="floating-logo logo-2"><img src="assets/logos/docker.png" alt="Docker"></div>
+                <div class="floating-logo logo-3"><img src="assets/logos/kubernetes.png" alt="Kubernetes"></div>
+                <div class="floating-logo logo-4"><img src="assets/logos/linux.png" alt="Linux"></div>
+                <div class="floating-logo logo-5"><img src="assets/logos/splunk.png" alt="Splunk"></div>
+                <div class="floating-logo logo-6"><img src="assets/logos/volatility.png" alt="Volatility"></div>
+                <div class="floating-logo logo-7"><img src="assets/logos/wireshark.png" alt="Wireshark"></div>
+                <div class="floating-logo logo-8"><img src="assets/logos/autopsy.png" alt="Autopsy"></div>
+                <div class="floating-logo logo-9"><img src="assets/logos/c.png" alt="C Programming"></div>
+                <div class="floating-logo logo-10"><img src="assets/logos/dpdk.png" alt="DPDK"></div>
+                <div class="floating-logo logo-11"><img src="assets/logos/vpp.png" alt="VPP"></div>
+                <div class="floating-logo logo-12"><img src="assets/logos/osi.png" alt="OSI Model"></div>
+            </div>
 
-      <footer>Thanks for the patience — this page updates automatically when maintenance completes.</footer>
-    </section>
-    <noscript>
-      <p style="text-align:center; color: var(--muted);">This page uses gentle animations; functionality works without JavaScript.</p>
-    </noscript>
-  </main>
-  <script>
-    // Optional: auto-refresh every 5 minutes in case the site comes back
-    setInterval(function() {
-      fetch(window.location.href, { cache: 'no-store' }).then(function() {
-        // If the site is redeployed, a hard refresh will show the new content
-        // window.location.reload();
-      });
-    }, 300000);
-  </script>
+            <div class="hero-content container">
+                <h1>Abhay Pratap Singh</h1>
+                <p>I am a <span class="typed-text"></span></p>
+                <div class="hero-socials">
+                    <a href="https://www.linkedin.com/in/abhay-pratap-singh-sengar" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://github.com/Abhay-Sengar" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="mailto:sengar.abhayps@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+            <a href="#about" class="scroll-down-arrow" aria-label="Scroll down">
+                <i class="fas fa-chevron-down"></i>
+            </a>
+        </section>
+
+        <section id="about" class="about section-padding">
+            <div class="container glass-card">
+                <h2 class="section-title">About Me</h2>
+                <p>I am a Scientist 'B' at the Centre for Development of Telematics (C-DOT), specializing in software development and architecture for national-scale network security solutions. With a strong foundation in Computer Science from IIT Jodhpur, my expertise spans high-performance packet processing, cybersecurity, and AI/ML applications.</p>
+                <p>My experience includes designing DPDK/VPP based applications, implementing deep packet inspection strategies, and developing AI-driven malware detection systems. I am passionate about leveraging technology to build secure, scalable, and intelligent systems to tackle real-world challenges. I thrive in collaborative environments and have a proven track record of leadership and technical excellence.</p>
+            </div>
+        </section>
+
+        <section id="experience" class="experience section-padding">
+            <div class="container">
+                <h2 class="section-title">Experience</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">Jun 2024 - Present</div>
+                        <div class="timeline-content glass-card">
+                            <h3>Scientist 'B' (Software Developer & Architect)</h3>
+                            <h4>Centre for Development of Telematics (DoT, Gol)</h4>
+                            <ul>
+                                <li>Led the core DPI track (3 members) of the National Scale Packet Processing Solution.</li>
+                                <li>Designed and developed a high-performance DPDK & VPP packet processing application sustaining 400 Gbps at ISP gateway edges.</li>
+                                <li>Implemented DPI to surface eSNI within UDP flows by parsing TLS extensions via nDPI.</li>
+                                <li>Engineered end-to-end DPI strategy, expanding application coverage by 200% leading to PoC acceptance by an Inter-ministerial committee.</li>
+                                <li>Optimized packet processing code to achieve 10x throughput uplift and 15x reduction in CPU utilization.</li>
+                                <li>Deployed DNS Response Policy Zones (DNS RPZ) across corporate infrastructure, blocking thousands of malicious requests.</li>
+                            </ul>
+                        </div>
+                    </div>
+                     <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">Jun 2023 - Aug 2023</div>
+                        <div class="timeline-content glass-card">
+                            <h3>MITACS Research Intern (AI/ML & Cybersecurity)</h3>
+                            <h4>York University, Canada</h4>
+                            <ul>
+                                <li>Implemented AI/ML techniques like information-gain selection and a three-layer Random Forest architecture for multi-source malware analysis.</li>
+                                <li>Developed an automated Python + QEMU testbed, generating a 17TB database of pcaps and memory dumps from over 2000 malware samples.</li>
+                                <li>Designed and developed VolMemlyzer(V2), a memory forensics feature extractor with 250+ supported features using the Volatility3 framework.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="skills section-padding">
+            <div class="container">
+                <h2 class="section-title">Technical Skills</h2>
+                <div class="skills-grid">
+                    <div class="skill-category glass-card">
+                        <h3><i class="fas fa-code"></i> Programming & Scripting</h3>
+                        <div class="skills-list"><span>C/C++</span><span>Python</span><span>Bash</span><span>PowerShell</span><span>JAVA</span><span>MATLAB</span></div>
+                    </div>
+                    <div class="skill-category glass-card">
+                        <h3><i class="fas fa-shield-alt"></i> Cybersecurity</h3>
+                        <div class="skills-list"><span>Volatility</span><span>Metasploit</span><span>Wireshark</span><span>NMap</span><span>YARA</span><span>BurpSuite</span><span>Splunk</span><span>Suricata</span><span>OSINT</span></div>
+                    </div>
+                    <div class="skill-category glass-card">
+                        <h3><i class="fas fa-network-wired"></i> Network Software Dev</h3>
+                        <div class="skills-list"><span>DPDK</span><span>VPP</span><span>nDPI</span><span>BGP</span><span>DNS RPZ</span><span>QUIC</span><span>TCP/IP</span></div>
+                    </div>
+                    <div class="skill-category glass-card">
+                        <h3><i class="fas fa-tools"></i> Tools & Platforms</h3>
+                        <div class="skills-list"><span>Docker</span><span>Kubernetes</span><span>Github Workflows</span><span>QEMU</span><span>VMware</span><span>Playwright</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="projects section-padding">
+            <div class="container">
+                <h2 class="section-title">Publications</h2>
+                <div class="publication-card glass-card">
+                    <span class="project-type">Journal Publication</span>
+                    <h3>Unveiling Evasive Malware Behavior: Towards Generating a Multi-Sources Benchmark Dataset and Evasive Malware Behavior Profiling Using Network Traffic and Memory Analysis</h3>
+                    <p>Published in <strong>The Journal of Supercomputing (Springer)</strong>.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="certifications" class="certifications section-padding">
+            <div class="container">
+                <h2 class="section-title">Certifications</h2>
+                <div class="cert-grid">
+                    <div class="cert-card glass-card"><h3>Certified Ethical Hacker v13</h3><p>EC Council (Training Completion)</p></div>
+                    <div class="cert-card glass-card"><h3>CompTIA Security+ (SY0-701)</h3><p>CompTIA</p></div>
+                    <div class="cert-card glass-card"><h3>Certified in Cybersecurity</h3><p>ISC2</p></div>
+                    <div class="cert-card glass-card"><h3>Google Cybersecurity Professional</h3><p>Google</p></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="testimonials" class="testimonials section-padding">
+            <div class="container">
+                <h2 class="section-title">Testimonials</h2>
+                <div class="testimonial-card glass-card">
+                    <p class="quote">"Abhay is an exceptionally talented and dedicated professional. His ability to tackle complex problems in network security and deliver high-performance solutions is remarkable. He was instrumental in our project's success and is a true asset to any team."</p>
+                    <div class="author">
+                        <p class="name">Jane Doe (Placeholder)</p>
+                        <p class="title">Lead Architect, Microsoft</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="achievements" class="achievements section-padding">
+            <div class="container glass-card">
+                <h2 class="section-title">Achievements & Recognition</h2>
+                <ul class="achievements-list">
+                    <li><i class="fas fa-trophy"></i> <strong>All India Rank 1</strong> in Microsoft Cybersecurity Engage 2022.</li>
+                    <li><i class="fas fa-award"></i> <strong>Institute Silver Medal</strong> & Student Distinguished Services Award at IIT Jodhpur.</li>
+                    <li><i class="fas fa-users"></i> <strong>Vice-President, Board of Student Sports</strong>, heading investments worth 2.1 Cr (INR) at IIT Jodhpur.</li>
+                    <li><i class="fas fa-medal"></i> <strong>State Rank 3 (Uttarakhand)</strong> in NSTSE-2019.</li>
+                    <li><i class="fas fa-graduation-cap"></i> Ranked in the <strong>Top 0.1% Nationally</strong> in AISSCE (Class XII) Examinations.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="trainings" class="trainings section-padding">
+            <div class="container">
+                <h2 class="section-title">Trainings & MOOCs</h2>
+                <div class="cert-grid">
+                    <div class="cert-card glass-card"><h3>Speaker @ c0c0n Conference</h3><p>Topic: Hacking Android, iOS, and IoT Apps</p></div>
+                    <div class="cert-card glass-card"><h3>Intro to Digital Forensics</h3><p>Security Blue Team</p></div>
+                    <div class="cert-card glass-card"><h3>SOC Essentials with Splunk</h3><p>Splunk STEP</p></div>
+                    <div class="cert-card glass-card"><h3>Data & Tools for Defense Analysts</h3><p>Splunk STEP</p></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact section-padding">
+            <div class="container glass-card">
+                <h2 class="section-title">Contact</h2>
+                <div class="contact-details">
+                    <div class="contact-item"><i class="fas fa-envelope"></i><a href="mailto:sengar.abhayps@gmail.com">sengar.abhayps@gmail.com</a></div>
+                    <div class="contact-item"><i class="fas fa-phone"></i><a href="tel:+919560949946">+91-9560949946</a></div>
+                    <div class="contact-item"><i class="fas fa-map-marker-alt"></i><span>Akbarpur, Uttar Pradesh, India</span></div>
+                </div>
+            </div>
+        </section>
+        
+        <footer class="footer"><p>&copy; 2025 Abhay Pratap Singh</p></footer>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>
