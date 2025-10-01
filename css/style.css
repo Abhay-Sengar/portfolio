@@ -50,7 +50,6 @@ body {
     border-right: 2px solid rgba(255, 255, 255, 0.1); display: flex; flex-direction: column;
     z-index: 1000; transition: width var(--transition-speed) ease, left var(--transition-speed) ease;
 }
-/* MODIFIED: Replaced sidebar-top with new sidebar-header */
 .sidebar-header {
     display: flex;
     align-items: center;
@@ -116,7 +115,7 @@ body.sidebar-collapsed .sidebar-links { overflow-y: hidden; }
 /* Main Content       */
 /* ------------------- */
 .main-content { margin-left: var(--sidebar-width-expanded); transition: margin-left var(--transition-speed) ease; }
-.container { max-width: 960px; margin-inline: auto; padding-inline: 1.5rem; }
+.container { max-width: 1100px; margin-inline: auto; padding-inline: 1.5rem; }
 .section-padding { padding: 5rem 0; }
 .section-title { text-align: center; margin-bottom: 2.5rem; font-size: 2.25rem; font-weight: 600; }
 .hero { position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; overflow: hidden; }
@@ -153,6 +152,68 @@ body.sidebar-collapsed .sidebar-links { overflow-y: hidden; }
 .logo-10 { bottom: 30%; right: 15%; width: 85px; height: 85px; animation-delay: -2.5s; animation-duration: 7.3s; }
 .logo-11 { top: 55%; right: 5%; width: 70px; height: 70px; animation-delay: -3.5s; animation-duration: 6.2s; }
 .logo-12 { top: 20%; left: 35%; width: 80px; height: 80px; animation-delay: -5.5s; animation-duration: 7.8s; }
+
+/* About Section layout styles */
+#about .container {
+    display: flex;
+    justify-content: center;
+}
+.about-layout {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+    gap: 0;
+    /* MODIFIED: Added padding to balance the layout for centering */
+    padding-right: 60px;
+}
+.about-profile-pic {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: var(--border-radius);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+    margin-right: -50px;
+}
+.about-card {
+    flex-grow: 1;
+    max-width: 800px;
+    padding-left: 70px;
+}
+.about-logos {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 120px;
+    height: 100%;
+    pointer-events: none;
+}
+.about-logo-wrapper {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    right: -2px;
+}
+.about-logo-wrapper img {
+    width: 75%;
+    height: 75%;
+    object-fit: contain;
+}
+.logo-cdot {
+    background-color: #ffffff;
+    top: 15%;
+}
+.logo-iitj {
+    background-color: #ffffff;
+    bottom: 15%;
+}
 
 .timeline { position: relative; max-width: 750px; margin: 0 auto; padding-left: 2rem; }
 .timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background-color: rgba(255, 255, 255, 0.1); }
@@ -210,6 +271,10 @@ body.sidebar-collapsed .sidebar-links { overflow-y: hidden; }
     .floating-logo { width: 60px; height: 60px; padding: 8px; }
     .logo-1 { top: 10%; left: 5%; }
     .logo-4 { top: 75%; right: 10%; width: 70px; height: 70px; }
+    .about-layout { flex-direction: column; display: flex; gap: 1.5rem; padding-right: 0; }
+    .about-profile-pic { width: 150px; height: 150px; margin-right: 0; }
+    .about-card { padding-left: 2.5rem; }
+    .about-logos { display: none; }
 }
 
 @media (max-width: 768px) {
