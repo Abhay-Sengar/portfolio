@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const sr = ScrollReveal({
                 origin: 'bottom', distance: '50px', duration: 1000, delay: 200, reset: false
             });
-            sr.reveal('.hero-content, .section-title, .timeline-item, .glass-card, .skill-icon');
+            sr.reveal('.hero-content, .section-title, .timeline-item, .glass-card, .skill-icon, .cert-logo-link');
         }
     };
 
@@ -109,6 +109,55 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     };
 
+    const initProjectSlider = () => {
+        const track = document.querySelector('.projects-track');
+        const prevButton = document.querySelector('.slider-nav.prev');
+        const nextButton = document.querySelector('.slider-nav.next');
+        const cards = document.querySelectorAll('.project-card');
+        
+        if (!track || !prevButton || !nextButton || !cards.length) return;
+
+        const cardWidth = track.offsetWidth;
+        let currentIndex = 0;
+
+        const updateButtons = () => {
+            prevButton.style.opacity = currentIndex <= 0 ? '0.5' : '1';
+            nextButton.style.opacity = currentIndex >= cards.length - 1 ? '0.5' : '1';
+        };
+
+        const scrollToCard = (index) => {
+            currentIndex = Math.max(0, Math.min(index, cards.length - 1));
+            const scrollPos = currentIndex * cardWidth;
+            track.scrollTo({
+                left: scrollPos,
+                behavior: 'smooth'
+            });
+            updateButtons();
+        };
+
+        prevButton.addEventListener('click', () => scrollToCard(currentIndex - 1));
+        nextButton.addEventListener('click', () => scrollToCard(currentIndex + 1));
+
+        // Handle scroll events to update button states
+        track.addEventListener('scroll', () => {
+            currentIndex = Math.round(track.scrollLeft / cardWidth);
+            updateButtons();
+        });
+
+        // Initial button state
+        updateButtons();
+
+        // Handle resize
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                cardWidth = track.offsetWidth;
+                scrollToCard(currentIndex);
+            }, 100);
+        });
+    };
+
     // Initialize all functionalities
     initMouseAura();
     initSidebar();
@@ -116,5 +165,6 @@ document.addEventListener("DOMContentLoaded", () => {
     initTyped();
     initScrollReveal();
     initScrollSpy();
-    initExperienceAccordion(); // Call the new function
+    initExperienceAccordion();
+    initProjectSlider(); // Initialize the project slider
 });

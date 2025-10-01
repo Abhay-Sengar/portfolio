@@ -264,14 +264,244 @@ body.sidebar-collapsed .sidebar-links { overflow-y: hidden; }
 .skills-list { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 .skills-list span { background: rgba(56, 189, 248, 0.1); padding: 0.25rem 0.75rem; border-radius: 999px; font-size: 0.85rem; }
 
-.publication-card { padding: 2rem; }
-.publication-card .project-type { font-size: 0.8rem; text-transform: uppercase; color: var(--clr-primary); font-weight: 600; margin-bottom: 0.5rem; display: block;}
-.publication-card h3 { font-size: 1.2rem; margin-bottom: 0.5rem;}
+/* Projects Section Styles */
+.projects-slider {
+    position: relative;
+    padding: 1rem 0;
+    margin: 0 -1.5rem;
+}
 
+.projects-track {
+    display: flex;
+    gap: 2rem;
+    padding: 1rem 1.5rem;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+}
+
+.projects-track::-webkit-scrollbar {
+    display: none; /* Chrome/Safari/Opera */
+}
+
+.project-card {
+    min-width: calc(100% - 4rem);
+    max-width: calc(100% - 4rem);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+}
+
+.project-content h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--clr-primary);
+}
+
+.project-content p {
+    margin-bottom: 1.5rem;
+    color: var(--clr-text-light);
+    line-height: 1.6;
+}
+
+.project-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.project-tech span {
+    background: rgba(56, 189, 248, 0.1);
+    color: var(--clr-primary);
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+}
+
+.btn-project {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--clr-primary);
+    color: var(--clr-bg-dark);
+    padding: 0.75rem 1.25rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-project:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(56, 189, 248, 0.4);
+}
+
+.slider-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--clr-primary);
+    border: none;
+    color: var(--clr-bg-dark);
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    z-index: 2;
+}
+
+.slider-nav:hover {
+    transform: translateY(-50%) scale(1.1);
+    background-color: #5ccfff;
+}
+
+.slider-nav.prev {
+    left: 1rem;
+}
+
+.slider-nav.next {
+    right: 1rem;
+}
+
+@media (min-width: 768px) {
+    .project-card {
+        min-width: calc(50% - 2rem);
+        max-width: calc(50% - 2rem);
+    }
+}
+
+@media (min-width: 1200px) {
+    .project-card {
+        min-width: calc(33.333% - 2rem);
+        max-width: calc(33.333% - 2rem);
+    }
+}
+
+.publication-card { 
+    padding: 2rem;
+    position: relative;
+    display: flex;
+    gap: 2rem;
+}
+.publication-content {
+    flex: 1;
+}
+.publication-card .project-type { 
+    font-size: 0.8rem; 
+    text-transform: uppercase; 
+    color: var(--clr-primary); 
+    font-weight: 600; 
+    margin-bottom: 0.5rem; 
+    display: block;
+}
+.publication-card h3 { 
+    font-size: 1.2rem; 
+    margin-bottom: 0.75rem;
+}
+.publication-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--clr-primary);
+    color: var(--clr-bg-dark);
+    padding: 0.75rem 1.25rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    margin-top: 1.5rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.publication-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(56, 189, 248, 0.4);
+}
+.publication-logos {
+    position: relative;
+    width: 120px;
+    padding-right: 1rem;
+    display: flex;
+    align-items: center;
+}
+.publication-logo-wrapper {
+    background: #ffffff;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+}
+.publication-logo-wrapper img {
+    width: 70%;
+    height: 70%;
+    object-fit: contain;
+}
+
+/* Responsive adjustments for publications */
+@media (max-width: 768px) {
+    .publication-card {
+        flex-direction: column;
+        gap: 1.5rem;
+        align-items: center;
+        text-align: center;
+    }
+    .publication-logos {
+        padding-right: 0;
+        width: auto;
+    }
+    .publication-btn {
+        margin-top: 1rem;
+    }
+}
+
+/* --- Certifications Section --- */
 .cert-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; }
 .cert-card { padding: 1.5rem; text-align: center; }
 .cert-card h3 { font-size: 1.1rem; color: var(--clr-text-light); }
 .cert-card p { font-size: 0.9rem; color: var(--clr-text-muted); }
+
+.cert-logos-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2.5rem;
+    align-items: center;
+    max-width: 950px;
+    margin: 2rem auto 0;
+}
+.cert-logo-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #ffffff;
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    margin: 0 auto;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.cert-logo-link:hover {
+    transform: translateY(-8px) scale(1.05);
+    box-shadow: 0 12px 25px rgba(56, 189, 248, 0.3);
+}
+.cert-logo-link img {
+    max-width: 80%;
+    max-height: 80%;
+    object-fit: contain;
+}
 
 .testimonial-card { padding: 2rem; text-align: center; }
 .testimonial-card .quote { font-style: italic; font-size: 1.1rem; margin-bottom: 1.5rem; }
@@ -310,6 +540,10 @@ body.sidebar-collapsed .sidebar-links { overflow-y: hidden; }
     .about-profile-pic { width: 150px; height: 150px; margin-right: 0; }
     .about-card { padding-left: 2.5rem; }
     .about-logos { display: none; }
+    .cert-logos-grid { 
+        grid-template-columns: repeat(2, 1fr); 
+        gap: 2rem;
+    }
 }
 
 @media (max-width: 768px) {
@@ -325,4 +559,12 @@ body.sidebar-collapsed .sidebar-links { overflow-y: hidden; }
     .timeline { margin-left: 45px; }
     .timeline-item { padding-left: 45px; }
     .timeline-logo { left: -55px; }
+    .cert-logos-grid { 
+        gap: 1.5rem; 
+    }
+    .cert-logo-link { 
+        width: 120px;
+        height: 120px; 
+    }
 }
+
