@@ -114,19 +114,46 @@ document.addEventListener("DOMContentLoaded", () => {
         const prevButton = document.querySelector('.slider-nav.prev');
         const nextButton = document.querySelector('.slider-nav.next');
         const cards = document.querySelectorAll('.project-card');
+        const dotsContainer = document.querySelector('.slider-dots');
         
-        if (!track || !prevButton || !nextButton || !cards.length) return;
+        if (!track || !prevButton || !nextButton || !cards.length || !dotsContainer) return;
 
-        const cardWidth = track.offsetWidth;
+        // Calculate number of possible shifts (total cards minus 1)
+        const numShifts = cards.length - 1;
+        
+        // Clear existing dots and create new ones
+        dotsContainer.innerHTML = '';
+        for (let i = 0; i < numShifts; i++) {
+            const dot = document.createElement('button');
+            dot.className = 'dot' + (i === 0 ? ' active' : '');
+            dot.setAttribute('aria-label', `Go to project ${i + 1}`);
+            dot.addEventListener('click', () => scrollToCard(i));
+            dotsContainer.appendChild(dot);
+        }
+        
+        const dots = document.querySelectorAll('.slider-dots .dot');
+
+        // Calculate single card width including gap
+        const cardStyle = window.getComputedStyle(cards[0]);
+        const cardWidth = cards[0].offsetWidth + parseInt(cardStyle.marginRight || '0');
         let currentIndex = 0;
 
+        const updateDots = () => {
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentIndex);
+            });
+        };
+
         const updateButtons = () => {
-            prevButton.style.opacity = currentIndex <= 0 ? '0.5' : '1';
-            nextButton.style.opacity = currentIndex >= cards.length - 1 ? '0.5' : '1';
+            // Hide/show buttons instead of changing opacity
+            prevButton.style.visibility = currentIndex <= 0 ? 'hidden' : 'visible';
+            nextButton.style.visibility = currentIndex >= cards.length - 2 ? 'hidden' : 'visible';
+            updateDots();
         };
 
         const scrollToCard = (index) => {
-            currentIndex = Math.max(0, Math.min(index, cards.length - 1));
+            const maxIndex = cards.length - 1;
+            currentIndex = Math.max(0, Math.min(index, maxIndex));
             const scrollPos = currentIndex * cardWidth;
             track.scrollTo({
                 left: scrollPos,
@@ -137,11 +164,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
         prevButton.addEventListener('click', () => scrollToCard(currentIndex - 1));
         nextButton.addEventListener('click', () => scrollToCard(currentIndex + 1));
+        
+        // Initial scroll to ensure first two cards are visible
+        scrollToCard(0);
 
         // Handle scroll events to update button states
         track.addEventListener('scroll', () => {
             currentIndex = Math.round(track.scrollLeft / cardWidth);
             updateButtons();
+        });
+
+        // Add click handlers for dots
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => scrollToCard(index));
         });
 
         // Initial button state
