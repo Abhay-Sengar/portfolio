@@ -267,19 +267,25 @@ body.sidebar-collapsed .sidebar-links { overflow-y: hidden; }
 /* Projects Section Styles */
 .projects-slider {
     position: relative;
-    padding: 1rem 0;
-    margin: 0 -1.5rem;
+    padding: 0 3rem; /* Increased space for navigation buttons */
+    overflow: hidden;
+    max-width: 100%;
+    margin: 0 auto;
+    box-sizing: border-box;
 }
 
 .projects-track {
     display: flex;
-    padding: 1rem 1.5rem;
+    padding: 1rem;
     overflow-x: auto;
     overflow-y: hidden; /* Prevent vertical scrolling */
     scroll-behavior: smooth;
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* IE/Edge */
     scroll-snap-type: x mandatory; /* Enable smooth snapping */
+    gap: 2rem;
+    width: calc(100% + 1rem); /* Ensure full width plus some extra space */
+    margin: 0 -0.5rem; /* Negative margin to counter the container padding */
 }
 
 .project-card {
@@ -291,17 +297,13 @@ body.sidebar-collapsed .sidebar-links { overflow-y: hidden; }
 }
 
 .project-card {
-    min-width: calc(50% - 3rem);
-    max-width: calc(50% - 3rem);
+    min-width: calc(50% - 2rem);
+    max-width: calc(50% - 2rem);
     padding: 2rem;
     border-radius: var(--border-radius);
     position: relative;
     transition: transform 0.3s ease;
-    margin-right: 2rem;
-}
-
-.project-card:last-child {
-    margin-right: 0;
+    flex-shrink: 0;
 }
 
 .project-card:hover {
@@ -311,11 +313,23 @@ body.sidebar-collapsed .sidebar-links { overflow-y: hidden; }
 /* Make cards full width on mobile */
 @media (max-width: 767px) {
     .project-card {
-        min-width: calc(100% - 4rem);
-        max-width: calc(100% - 4rem);
-        margin-right: 2rem;
+        min-width: 100%;
+        max-width: 100%;
+    }
+    .projects-track {
+        padding: 1rem 0;
+        gap: 1.5rem;
     }
 }
+
+/* Ensure proper spacing for 2 cards at a time */
+@media (min-width: 768px) {
+    .project-card {
+        min-width: calc(50% - 2rem);
+        max-width: calc(50% - 2rem);
+    }
+}
+
 
 .project-content h3 {
     font-size: 1.5rem;
@@ -387,11 +401,13 @@ body.sidebar-collapsed .sidebar-links { overflow-y: hidden; }
 }
 
 .slider-nav.prev {
-    left: 1rem;
+    left: 0;
+    z-index: 2;
 }
 
 .slider-nav.next {
-    right: 1rem;
+    right: 0;
+    z-index: 2;
 }
 
 .slider-dots {

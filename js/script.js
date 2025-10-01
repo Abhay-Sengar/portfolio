@@ -68,7 +68,8 @@ document.addEventListener("DOMContentLoaded", () => {
             const sr = ScrollReveal({
                 origin: 'bottom', distance: '50px', duration: 1000, delay: 200, reset: false
             });
-            sr.reveal('.hero-content, .section-title, .timeline-item, .glass-card, .skill-icon, .cert-logo-link');
+            //all cards will not come up again on scroll all fixed in space
+            sr.reveal('.hero-content, .section-title, .timeline-item, .skill-icon, .cert-logo-link');
         }
     };
 
@@ -116,81 +117,88 @@ document.addEventListener("DOMContentLoaded", () => {
         const cards = document.querySelectorAll('.project-card');
         const dotsContainer = document.querySelector('.slider-dots');
         
-        if (!track || !prevButton || !nextButton || !cards.length || !dotsContainer) return;
+        if (!track || !prevButton || !nextButton || !cards.length || !dotsContainer) {
+            return; // Exit if any element is missing
+        }
 
-        // Calculate number of possible shifts (total cards minus 1)
-        const numShifts = cards.length - 1;
+        // --- HELPER FUNCTION ---
+        // This function calculates the full width of a single card, including its margin.
+        // It's defined here so the rest of the code can use it.
+        const calculateCardWidth = () => {
+            // We need to check if cards[0] exists before trying to access it
+            if (cards[0]) {
+                const cardStyle = window.getComputedStyle(cards[0]);
+                cardWidth = cards[0].offsetWidth + parseInt(cardStyle.marginRight, 10);
+            }
+        };
         
-        // Clear existing dots and create new ones
+        // --- SETUP & LOGIC ---
+        let cardWidth = 0;
+        let currentIndex = 0;
+        const visibleCardsOnDesktop = 2;
+        // Calculate the number of possible scroll positions
+        const numPositions = cards.length > visibleCardsOnDesktop ? cards.length - visibleCardsOnDesktop + 1 : 1;
+        
         dotsContainer.innerHTML = '';
-        for (let i = 0; i < numShifts; i++) {
+        for (let i = 0; i < numPositions; i++) {
             const dot = document.createElement('button');
             dot.className = 'dot' + (i === 0 ? ' active' : '');
-            dot.setAttribute('aria-label', `Go to project ${i + 1}`);
-            dot.addEventListener('click', () => scrollToCard(i));
+            dot.setAttribute('aria-label', `Go to project set ${i + 1}`);
             dotsContainer.appendChild(dot);
         }
         
-        const dots = document.querySelectorAll('.slider-dots .dot');
+        const dots = Array.from(dotsContainer.children);
 
-        // Calculate single card width including gap
-        const cardStyle = window.getComputedStyle(cards[0]);
-        const cardWidth = cards[0].offsetWidth + parseInt(cardStyle.marginRight || '0');
-        let currentIndex = 0;
-
-        const updateDots = () => {
+        const updateUI = () => {
+            // Update button visibility
+            prevButton.style.visibility = currentIndex <= 0 ? 'hidden' : 'visible';
+            nextButton.style.visibility = currentIndex >= numPositions - 1 ? 'hidden' : 'visible';
+            // Update active dot
             dots.forEach((dot, index) => {
                 dot.classList.toggle('active', index === currentIndex);
             });
         };
 
-        const updateButtons = () => {
-            // Hide/show buttons instead of changing opacity
-            prevButton.style.visibility = currentIndex <= 0 ? 'hidden' : 'visible';
-            nextButton.style.visibility = currentIndex >= cards.length - 2 ? 'hidden' : 'visible';
-            updateDots();
-        };
-
         const scrollToCard = (index) => {
-            const maxIndex = cards.length - 1;
+            const maxIndex = numPositions - 1;
             currentIndex = Math.max(0, Math.min(index, maxIndex));
             const scrollPos = currentIndex * cardWidth;
             track.scrollTo({
                 left: scrollPos,
                 behavior: 'smooth'
             });
-            updateButtons();
+            updateUI();
         };
 
-        prevButton.addEventListener('click', () => scrollToCard(currentIndex - 1));
-        nextButton.addEventListener('click', () => scrollToCard(currentIndex + 1));
-        
-        // Initial scroll to ensure first two cards are visible
-        scrollToCard(0);
-
-        // Handle scroll events to update button states
-        track.addEventListener('scroll', () => {
-            currentIndex = Math.round(track.scrollLeft / cardWidth);
-            updateButtons();
-        });
-
-        // Add click handlers for dots
+        // --- EVENT LISTENERS ---
         dots.forEach((dot, index) => {
             dot.addEventListener('click', () => scrollToCard(index));
         });
 
-        // Initial button state
-        updateButtons();
+        prevButton.addEventListener('click', () => scrollToCard(currentIndex - 1));
+        nextButton.addEventListener('click', () => scrollToCard(currentIndex + 1));
+        
+        track.addEventListener('scroll', () => {
+            if (cardWidth > 0) {
+                currentIndex = Math.round(track.scrollLeft / cardWidth);
+                updateUI();
+            }
+        });
 
-        // Handle resize
         let resizeTimer;
         window.addEventListener('resize', () => {
             clearTimeout(resizeTimer);
             resizeTimer = setTimeout(() => {
-                cardWidth = track.offsetWidth;
-                scrollToCard(currentIndex);
+                calculateCardWidth();
+                // Recalculate scroll position to keep the view consistent
+                const scrollPos = currentIndex * cardWidth;
+                track.scrollTo({ left: scrollPos, behavior: 'auto' }); // Use 'auto' for instant jump on resize
             }, 100);
         });
+
+        // --- INITIALIZATION ---
+        calculateCardWidth();
+        updateUI();
     };
 
     // Initialize all functionalities
