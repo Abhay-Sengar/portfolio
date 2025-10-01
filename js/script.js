@@ -233,6 +233,51 @@ document.addEventListener("DOMContentLoaded", () => {
         updateUI();
     };
 
+    const initRecommendationsSlider = () => {
+        const slider = document.querySelector('.recommendations-slider');
+        const track = document.querySelector('.recommendations-track');
+        const cards = document.querySelectorAll('.recommendation-card');
+        const dotsContainer = document.querySelector('.recommendations-dots');
+        if (!track || !cards.length || !dotsContainer) return;
+
+        let currentIndex = 0;
+        let autoPlayInterval;
+
+        dotsContainer.innerHTML = '';
+        cards.forEach((_, i) => {
+            const dot = document.createElement('button');
+            dot.className = 'dot' + (i === 0 ? ' active' : '');
+            dot.setAttribute('aria-label', `Go to recommendation ${i + 1}`);
+            dotsContainer.appendChild(dot);
+        });
+        const dots = Array.from(dotsContainer.children);
+
+        const goToSlide = (index) => {
+            currentIndex = index;
+            track.style.transform = `translateX(-${index * 100}%)`;
+            dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
+        };
+
+        const nextSlide = () => {
+            const nextIndex = (currentIndex + 1) % cards.length;
+            goToSlide(nextIndex);
+        };
+
+        const startAutoPlay = () => {
+            autoPlayInterval = setInterval(nextSlide, 7000); // Rotate every 7 seconds
+        };
+
+        const stopAutoPlay = () => {
+            clearInterval(autoPlayInterval);
+        };
+
+        dots.forEach((dot, i) => dot.addEventListener('click', () => goToSlide(i)));
+        slider.addEventListener('mouseenter', stopAutoPlay);
+        slider.addEventListener('mouseleave', startAutoPlay);
+
+        startAutoPlay();
+    };
+
     // Initialize all functionalities
     initMouseAura();
     initSidebar();
@@ -241,5 +286,6 @@ document.addEventListener("DOMContentLoaded", () => {
     initScrollReveal();
     initScrollSpy();
     initExperienceAccordion();
-    initProjectSlider(); // Initialize the project slider
+    initProjectSlider();
+    initRecommendationsSlider();
 });
