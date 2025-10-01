@@ -64,12 +64,44 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const initScrollReveal = () => {
-        if (typeof ScrollReveal !== 'undefined') {
-            const sr = ScrollReveal({
-                origin: 'bottom', distance: '50px', duration: 1000, delay: 200, reset: false
+        // Exit if the ScrollReveal library isn't loaded
+        if (typeof ScrollReveal === 'undefined') {
+            return; 
+        }
+
+        // 1. General instance for all elements on the main page scroll
+        const srPage = ScrollReveal({
+            origin: 'bottom',
+            distance: '50px',
+            duration: 1000,
+            delay: 200,
+            reset: false
+        });
+
+        // Animate all general elements, EXCLUDING the project cards inside the slider.
+        srPage.reveal('.hero-content, .section-title, .timeline-item, .glass-card:not(.project-card), .skill-icon, .cert-logo-link, .floating-logos-container, .about-profile-pic, .about-logos');
+
+        // 2. A second, specific instance for the project cards inside the slider
+        const projectTrackContainer = document.querySelector('.projects-track');
+
+        // Make sure the container element exists before trying to initialize ScrollReveal on it
+        if (projectTrackContainer) {
+            ScrollReveal().reveal('.project-card', {
+                // --- THIS IS THE CRITICAL FIX ---
+                // The container MUST be the element that actually scrolls (.projects-track)
+                container: projectTrackContainer,
+                
+                // Configuration for the animation
+                origin: 'bottom',
+                distance: '50px',
+                duration: 800,
+                delay: 200,
+                // 'interval' creates a nice staggered effect for items in a sequence
+                interval: 150, 
+                reset: false,
+                // This can help trigger the animation as soon as 10% of the card is visible
+                viewFactor: 0.1 
             });
-            //all cards will not come up again on scroll all fixed in space
-            sr.reveal('.hero-content, .section-title, .timeline-item, .skill-icon, .cert-logo-link');
         }
     };
 
