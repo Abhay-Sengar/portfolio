@@ -11,27 +11,64 @@ document.addEventListener("DOMContentLoaded", () => {
             }, { duration: 3000, fill: "forwards" });
         };
     };
-
+    // in script.js
     const initSidebar = () => {
-        const toggleButton = document.getElementById("sidebar-toggle");
+        const desktopToggleButton = document.getElementById("sidebar-toggle");
+        const mobileToggleButton = document.getElementById("mobile-nav-toggle");
+        const mobileToggleIcon = mobileToggleButton?.querySelector('i');
+        const overlay = document.querySelector('.overlay');
         const body = document.body;
-        if (window.innerWidth <= 992 && window.innerWidth > 768) {
-             body.classList.add('sidebar-collapsed');
-        }
-        toggleButton.addEventListener("click", () => {
-            if (window.innerWidth > 768) {
-                body.classList.toggle('sidebar-collapsed');
-                body.classList.remove('sidebar-expanded');
-            } else {
-                body.classList.toggle('sidebar-expanded');
-                body.classList.remove('sidebar-collapsed');
+
+        // Function to cleanly close the mobile navigation
+        const closeMobileNav = () => {
+            body.classList.remove('sidebar-expanded');
+            if (mobileToggleIcon) {
+                mobileToggleIcon.classList.remove('fa-times');
+                mobileToggleIcon.classList.add('fa-bars');
             }
-        });
+        };
+
+        // --- Event Listeners ---
+
+        // 1. Desktop Toggle (for collapsing sidebar)
+        if (desktopToggleButton) {
+            desktopToggleButton.addEventListener("click", () => {
+                if (window.innerWidth > 768) {
+                    body.classList.toggle('sidebar-collapsed');
+                }
+            });
+        }
+
+        // 2. Mobile Toggle (for opening/closing sidebar)
+        if (mobileToggleButton && mobileToggleIcon) {
+            mobileToggleButton.addEventListener("click", () => {
+                body.classList.toggle('sidebar-expanded');
+                const isExpanded = body.classList.contains('sidebar-expanded');
+                // Change icon based on state
+                mobileToggleIcon.className = isExpanded ? 'fas fa-times' : 'fas fa-bars';
+            });
+        }
+        
+        // 3. Close sidebar when a link is clicked on mobile
         document.querySelectorAll('.sidebar-links a').forEach(link => {
-            link.addEventListener('click', () => { if (window.innerWidth <= 768) body.classList.remove('sidebar-expanded'); });
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 768) {
+                    closeMobileNav();
+                }
+            });
         });
+
+        // 4. Close sidebar when the overlay is clicked
+        if (overlay) {
+            overlay.addEventListener('click', closeMobileNav);
+        }
+        
+        // --- Initial State Setup ---
+        // Set collapsed state for tablet view on page load
+        if (window.innerWidth <= 992 && window.innerWidth > 768) {
+            body.classList.add('sidebar-collapsed');
+        }
     };
-    
     const initParticles = () => {
         if (typeof particlesJS !== 'undefined') {
             particlesJS('particles-js', {
