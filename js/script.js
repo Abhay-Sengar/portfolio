@@ -78,8 +78,8 @@ document.addEventListener("DOMContentLoaded", () => {
             reset: false
         });
 
-        // Animate all general elements, EXCLUDING the project cards inside the slider.
-        srPage.reveal('.hero-content, .section-title, .timeline-item, .glass-card:not(.project-card), .skill-icon, .cert-logo-link, .floating-logos-container, .about-profile-pic, .about-logos');
+        // Animate all general elements, EXCLUDING both project and recommendation cards inside sliders.
+        srPage.reveal('.hero-content, .section-title, .timeline-item, .glass-card:not(.project-card):not(.recommendation-card), .skill-icon, .cert-logo-link, .floating-logos-container, .about-profile-pic, .about-logos');
 
         // 2. A second, specific instance for the project cards inside the slider
         const projectTrackContainer = document.querySelector('.projects-track');
@@ -238,7 +238,11 @@ document.addEventListener("DOMContentLoaded", () => {
         const track = document.querySelector('.recommendations-track');
         const cards = document.querySelectorAll('.recommendation-card');
         const dotsContainer = document.querySelector('.recommendations-dots');
-        if (!track || !cards.length || !dotsContainer) return;
+        // 1. Select the new navigation buttons
+        const prevButton = slider?.querySelector('.slider-nav.prev');
+        const nextButton = slider?.querySelector('.slider-nav.next');
+
+        if (!track || !cards.length || !dotsContainer || !prevButton || !nextButton) return;
 
         let currentIndex = 0;
         let autoPlayInterval;
@@ -263,15 +267,43 @@ document.addEventListener("DOMContentLoaded", () => {
             goToSlide(nextIndex);
         };
 
+        // 2. Create a function for the previous slide
+        const prevSlide = () => {
+            const prevIndex = (currentIndex - 1 + cards.length) % cards.length;
+            goToSlide(prevIndex);
+        };
+
         const startAutoPlay = () => {
-            autoPlayInterval = setInterval(nextSlide, 7000); // Rotate every 7 seconds
+            clearInterval(autoPlayInterval); // Stop any existing timers
+            autoPlayInterval = setInterval(nextSlide, 7000);
         };
 
         const stopAutoPlay = () => {
             clearInterval(autoPlayInterval);
         };
 
-        dots.forEach((dot, i) => dot.addEventListener('click', () => goToSlide(i)));
+        // 3. Helper to reset the autoplay timer on user interaction
+        const resetAutoPlay = () => {
+            stopAutoPlay();
+            startAutoPlay();
+        };
+
+        dots.forEach((dot, i) => dot.addEventListener('click', () => {
+            goToSlide(i);
+            resetAutoPlay(); // Reset timer on dot click
+        }));
+
+        // 4. Add click event listeners to the buttons
+        prevButton.addEventListener('click', () => {
+            prevSlide();
+            resetAutoPlay(); // Reset timer on prev click
+        });
+
+        nextButton.addEventListener('click', () => {
+            nextSlide();
+            resetAutoPlay(); // Reset timer on next click
+        });
+
         slider.addEventListener('mouseenter', stopAutoPlay);
         slider.addEventListener('mouseleave', startAutoPlay);
 

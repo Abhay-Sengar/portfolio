@@ -565,8 +565,9 @@ body.sidebar-collapsed .sidebar-links { overflow-y: hidden; }
 .recommendations-slider {
     position: relative;
     max-width: 800px;
-    margin: 50px auto 0; /* Top margin provides space for the overlapping image */
+    margin: 50px auto 0;
     overflow: hidden;
+    padding: 0 3rem; /* ADD THIS LINE */
 }
 .recommendations-track {
     display: flex;
@@ -611,6 +612,7 @@ body.sidebar-collapsed .sidebar-links { overflow-y: hidden; }
     /* Truncate long text to a max of 5 lines */
     display: -webkit-box;
     -webkit-line-clamp: 5;
+    line-clamp: 5;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
