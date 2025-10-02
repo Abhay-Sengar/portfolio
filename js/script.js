@@ -106,17 +106,31 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const initScrollSpy = () => {
-        const sections = document.querySelectorAll("section[id]");
+        // MODIFICATION 1: Select the footer as well, since it has the "contact" ID now.
+        const sections = document.querySelectorAll("section[id], footer[id]");
         const navLinks = document.querySelectorAll(".sidebar-links a");
+        
         window.addEventListener('scroll', () => {
             let current = 'hero';
             sections.forEach(section => {
                 const sectionTop = section.offsetTop;
-                if (window.scrollY >= sectionTop - 150) current = section.getAttribute('id');
+                if (window.scrollY >= sectionTop - 150) {
+                    current = section.getAttribute('id');
+                }
             });
+
+            // MODIFICATION 2: Add a special check for the bottom of the page.
+            // If the bottom of the viewport is at or near the bottom of the page,
+            // force the 'current' section to be 'contact'. A small buffer (-10) helps.
+            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 10) {
+                current = 'contact';
+            }
+
             navLinks.forEach(link => {
                 link.classList.remove('active');
-                if (link.getAttribute('href') === `#${current}`) link.classList.add('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
             });
         });
     };
