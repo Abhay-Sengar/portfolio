@@ -94,7 +94,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const initTyped = () => {
         if (typeof Typed !== 'undefined') {
             new Typed(".typed-text", {
-                strings: ["Software Developer", "Cybersecurity Researcher", "AI-ML Enthusiast"],
+                strings: ["Low-Latency Systems Engineer", "HFT Infrastructure Developer", "Cybersecurity Researcher", "AI-ML Enthusiast"],
                 typeSpeed: 50, backSpeed: 30, loop: true, backDelay: 2000,
             });
         }
