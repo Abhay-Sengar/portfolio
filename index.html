@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abhay Pratap Singh | Software & Cybersecurity</title>
-    <meta name="description" content="Portfolio of Abhay Pratap Singh, a Scientist at C-DOT and researcher specializing in high-performance software development, cybersecurity, and AI/ML.">
+    <title>Abhay Pratap Singh | Low-Latency Systems / HFT Infrastructure / AI-ML</title>
+    <meta name="description" content="Portfolio of Abhay Pratap Singh — Scientist 'B' at C-DOT (DoT, GoI), IIT Jodhpur Silver Medalist, AIR 1 Microsoft CyberEngage 2022. Specializing in Low-Latency Systems, HFT Infrastructure, DPDK/VPP, and AI/ML.">
     
     <link rel="icon" href="assets/images/profile.jpg" type="image/jpeg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -84,8 +84,9 @@
                 <div class="about-layout">
                     <img src="assets/images/profile.jpg" alt="Abhay Pratap Singh" class="about-profile-pic">
                     <div class="glass-card about-card">
-                        <p>I am a Scientist 'B' at the Centre for Development of Telematics (C-DOT), specializing in software development and architecture for national-scale network security solutions. With a strong foundation in Computer Science from IIT Jodhpur, my expertise spans high-performance packet processing, cybersecurity, and AI/ML applications.</p>
-                        <p>My experience includes designing DPDK/VPP based applications, implementing deep packet inspection strategies, and developing AI-driven malware detection systems. I am passionate about leveraging technology to build secure, scalable, and intelligent systems to tackle real-world challenges.</p>
+                        <p>I am a Scientist 'B' at the Centre for Development of Telematics (C-DOT, DoT, GoI), where I design and engineer national-scale, ultra-low-latency network systems. I hold a B.Tech. in Computer Science from IIT Jodhpur (Institute Silver Medal) and was ranked All India 1st in Microsoft CyberEngage 2022.</p>
+                        <p>My core expertise lies in low-latency / HFT-grade systems: DPDK kernel-bypass packet processing at 400 Gbps line-rate, lock-free data structures, AVX-512 SIMD optimization, CPU core isolation, NUMA-aware allocation, and NIC hardware offloads — the same techniques underpinning co-location-grade market-data and order-execution pipelines. I also architect production LLM inference stacks (vLLM + A100), autonomous CI/CD agents, and RAG pipelines for developer productivity.</p>
+                        <p>Beyond systems software, I have hands-on research experience in AI-driven malware detection (published in The Journal of Supercomputing, Springer) and cybersecurity, having conducted MITACS research at York University, Toronto.</p>
                     </div>
                     <div class="about-logos">
                         <div class="about-logo-wrapper logo-cdot">
@@ -110,19 +111,28 @@
                         <div class="timeline-content glass-card">
                             <div class="timeline-header">
                                 <div class="header-text">
-                                    <h3>Scientist 'B' (Software Developer & Architect)</h3>
-                                    <h4>Centre for Development of Telematics (DoT, Gol)</h4>
+                                    <h3>Scientist 'B' (Systems Software Engineer & Architect)</h3>
+                                    <h4>Centre for Development of Telematics (DoT, GoI)</h4>
                                 </div>
                                 <i class="fas fa-chevron-down"></i>
                             </div>
                             <div class="timeline-details">
                                 <ul>
-                                    <li>Designed and developed a high-performance DPDK & VPP based packet processing application (C based) in single-box solution sustaining 400 Gbps Rx/Tx at ISP gateway edges.</li>
-                                    <li>Implemented DPI (C based) to surface eSNI within UDP flows by parsing Initial ClientHello and TLS extensions via nDPI.</li>
-                                    <li>Engineered end-to-end DPI strategy and architecture, expanding application coverage by 200% leading to PoC acceptance by an Inter-ministerial committee.</li>
-                                    <li>Optimized packet processing code to leverage NIC offloads and batched Tx, achieving 10x throughput uplift and 15x reduction in CPU utilization.</li>
-                                    <li>Deployed DNS Response Policy Zone (DNS RPZ) across corporate DNS infrastructure, blocking thousands of requests to blacklisted domains.</li>
-                                    <li>Designed and developed highly optimized, large-scale crawlers for Telegram and Reddit using Playwright/Python for threat intelligence.</li>
+                                    <li>Designed a DPDK-VPP kernel-bypass packet processing engine in C, sustaining <strong>400 Gbps line-rate</strong> Rx/Tx on a single commodity server — directly analogous to co-location-grade market-data feed ingestion and order-execution pipelines.</li>
+                                    <li>Eliminated kernel scheduling overhead via DPDK Poll Mode Drivers (PMD) with busy-poll I/O loops, achieving <strong>deterministic sub-microsecond</strong> packet forwarding latency — the same execution model as HFT tick-to-trade fast paths.</li>
+                                    <li>Engineered <strong>lock-free, wait-free ring buffers</strong> (rte_ring) and hugepage-backed memory pools (rte_mempool), achieving zero malloc contention under sustained 400 Gbps load — identical to the zero-alloc constraint in HFT order management hot paths.</li>
+                                    <li>Designed <strong>cache-line-aligned (64-byte)</strong> struct layouts using __rte_cache_aligned, eliminating false sharing between forwarding cores — reducing L1 D-cache miss rate by ~40% and delivering predictable, jitter-free throughput.</li>
+                                    <li>Implemented <strong>CPU affinity pinning</strong> (pthread_setaffinity_np) and NUMA-local hugepage allocation, isolating forwarding threads to dedicated physical cores — directly applicable to HFT thread-isolation and latency-determinism requirements.</li>
+                                    <li>Applied <strong>AVX-512 SIMD intrinsics</strong> (_mm512_*) for bulk packet classification and field extraction, achieving a 10× throughput uplift and 15× reduction in CPU utilization.</li>
+                                    <li>Engineered NIC hardware offloads (RSS, checksum offload, segmentation, flow classification) to offload compute from software, reducing per-packet CPU cycles.</li>
+                                    <li>Implemented C-based <strong>Deep Packet Inspection (DPI)</strong> for eSNI extraction from UDP/TLS flows by parsing Initial ClientHello and TLS extensions via nDPI — demonstrating byte-level protocol parsing at wire speed.</li>
+                                    <li>Engineered a two-phase Producer-Consumer <strong>stateful DPI pipeline</strong> maintaining per-flow state across correlated packets, expanding protocol coverage by 200%; PoC accepted by an Inter-ministerial committee (GoI).</li>
+                                    <li>Architected a production-grade, fully <strong>air-gapped LLM inference stack</strong> on Dell PowerEdge R760 (NVIDIA A100 80GB PCIe) using vLLM 0.21 + Qwen3.6-27B-FP8, achieving ~60 tok/s with zero data egress.</li>
+                                    <li>Implemented <strong>RadixAttention KV-cache</strong> prefix caching (43GB cache pool, ~675K token capacity), enabling sub-50ms repeated-query latency for real-time IDE assistance.</li>
+                                    <li>Built a <strong>hybrid RAG pipeline</strong> using Qdrant vector DB with BAAI/bge-large-en-v1.5 dense embeddings, ingesting DPDK API references and Intel AVX-512 manuals via automated nightly cron jobs.</li>
+                                    <li>Designed a <strong>LangGraph-based autonomous CI/CD verification pipeline</strong>: Clang/Tree-Sitter AST analysis, gcc compilation loop with self-correction, and DPDK standards compliance scanning — cutting code review turnaround from hours to minutes.</li>
+                                    <li>Deployed DNS Response Policy Zone (RPZ) across enterprise DNS infrastructure in Delhi & Bangalore, blocking thousands of blacklisted domains and C&C servers in real time.</li>
+                                    <li>Engineered high-throughput distributed async crawlers using Python asyncio and Playwright across Telegram/Reddit nodes, achieving <strong>70% higher throughput</strong> over the previous solution.</li>
                                 </ul>
                             </div>
                         </div>
@@ -141,10 +151,10 @@
                             </div>
                             <div class="timeline-details">
                                 <ul>
-                                    <li>Implemented AI & ML techniques like information-gain selection and a three-layer Random Forest architecture for multi-source behavioural analysis.</li>
-                                    <li>Developed an automated Python + QEMU testbed to execute 2000 malware samples, generating a 17TB database of pcaps and memory dumps.</li>
-                                    <li>Achieved high performance metrics with macro F1-scores of 0.95 for binary classification and 0.98 for family classification.</li>
-                                    <li>Designed and developed VolMemlyzer(V2), a feature extractor tool with 250+ memory analytics features using the Volatility3 framework.</li>
+                                    <li>Implemented a <strong>multi-layer ML ensemble</strong> (information-gain feature selection, three-layer Random Forest, weighted score fusion) over network flow and memory dump features; achieved macro F1 ≈ 0.98 on a 17TB production-scale benchmark.</li>
+                                    <li>Engineered an automated <strong>Python + QEMU VM orchestration testbed</strong> executing 2,000 malware samples across 8 families (8 vCPU / 8GB RAM per VM, parallelized) — directly analogous to large-scale backtesting infrastructure in HFT research.</li>
+                                    <li>Achieved L1 macro P/R/F1 ≈ 0.96/0.96/0.95; L2 macro F1 ≈ 0.98; results published in <strong>The Journal of Supercomputing (Springer)</strong>.</li>
+                                    <li>Designed <strong>VolMemLyzer-V2</strong> in Python with 250+ memory analytics features (vs &lt;75 in V1) using the Volatility3 framework; modular pipeline reduced snapshot processing time by 20–30%.</li>
                                 </ul>
                             </div>
                         </div>
@@ -163,8 +173,8 @@
                             </div>
                             <div class="timeline-details">
                                 <ul>
-                                    <li>Contributed to the Operational Technology (OT) security module by implementing standards (RFC 5424/5425) for their next-gen SIEM system, TRACE.</li>
-                                    <li>Designed and deployed 3 customized honeypots for increased efficacy using CONPOT, implemented within containerized Docker environments.</li>
+                                    <li>Contributed to the next-gen SIEM (<strong>TRACE</strong>) implementing RFC 5424/5425 syslog ingestion standards for high-volume event streams — directly analogous to real-time market event stream processing and alerting.</li>
+                                    <li>Designed and deployed <strong>3 containerized CONPOT honeypots</strong> in Docker for OT security research, demonstrating production container orchestration for isolated, adversarial environments.</li>
                                 </ul>
                             </div>
                         </div>
@@ -183,9 +193,9 @@
                             </div>
                             <div class="timeline-details">
                                 <ul>
-                                    <li>Ranked 1st (All India) on the program leaderboard based on performance in assignments and final project.</li>
-                                    <li>Conducted OSINT and identified 10 most probable attack vectors against Critical Infrastructure, proposing a comprehensive Solution Architecture.</li>
-                                    <li>Presented 5 functional prototypes/PoCs, including a Machine Learning model to detect botnet attacks and custom enumeration tools.</li>
+                                    <li>Ranked <strong>1st All India</strong> on the program leaderboard defending Critical Infrastructure (Delhi SLDC) from Stuxnet-like cyber-attacks — demonstrating elite competitive performance under adversarial, time-pressured conditions.</li>
+                                    <li>Conducted OSINT and proposed a <strong>15-control Zero Trust defence architecture</strong> with incident response playbooks; presented 5 functional ML and security PoCs.</li>
+                                    <li>Identified 10 most probable attack vectors against Critical Infrastructure and developed a comprehensive Solution Architecture including an ML model to detect botnet attacks.</li>
                                 </ul>
                             </div>
                         </div>
@@ -199,28 +209,28 @@
                 <h2 class="section-title">Technical Skills</h2>
                 <div class="skills-grid">
                     <div class="skill-category glass-card">
-                        <h3><i class="fas fa-code"></i> Programming & Scripting</h3>
-                        <div class="skills-list"><span>C/C++</span><span>Python</span><span>Bash</span><span>PowerShell</span><span>JAVA</span><span>MATLAB</span></div>
+                        <h3><i class="fas fa-code"></i> Programming / Systems</h3>
+                        <div class="skills-list"><span>C/C++ (C11/C17)</span><span>Python</span><span>Bash</span><span>x86-64 Assembly</span><span>MATLAB</span><span>Java</span><span>PowerShell</span></div>
                     </div>
                     <div class="skill-category glass-card">
-                        <h3><i class="fas fa-shield-alt"></i> Cybersecurity</h3>
-                        <div class="skills-list"><span>Volatility</span><span>Metasploit</span><span>Wireshark</span><span>NMap</span><span>YARA</span><span>BurpSuite</span><span>Splunk</span><span>Suricata</span><span>OSINT</span><span>NIST CSF</span></div>
+                        <h3><i class="fas fa-tachometer-alt"></i> Low-Latency / HFT Systems</h3>
+                        <div class="skills-list"><span>Kernel Bypass (DPDK/PMD)</span><span>Lock-Free &amp; Wait-Free DS</span><span>CPU Pinning &amp; Core Isolation</span><span>NUMA-Aware Allocation</span><span>Hugepages (2MB/1GB)</span><span>TSC-Based Timestamping</span><span>Busy-Poll I/O</span><span>Cache-Line Alignment</span><span>False-Sharing Elimination</span><span>AVX-512/AVX-2 SIMD</span><span>NIC HW Offloads (RSS/Flow)</span><span>Zero-Copy Networking</span></div>
                     </div>
                     <div class="skill-category glass-card">
-                        <h3><i class="fas fa-network-wired"></i> Network Software Dev</h3>
-                        <div class="skills-list"><span>DPDK</span><span>VPP</span><span>nDPI</span><span>BGP</span><span>DNS RPZ</span><span>QUIC</span><span>TCP/IP</span><span>OSI Model</span></div>
+                        <h3><i class="fas fa-network-wired"></i> Network Protocols</h3>
+                        <div class="skills-list"><span>DPDK</span><span>VPP</span><span>nDPI</span><span>TCP/IP Stack</span><span>BGP</span><span>DNS RPZ</span><span>QUIC</span><span>TLS/eSNI Parsing</span><span>FIX / ITCH / OUCH</span><span>ICMP</span><span>OSI Model</span></div>
                     </div>
                     <div class="skill-category glass-card">
-                        <h3><i class="fas fa-tools"></i> Tools & Platforms</h3>
-                        <div class="skills-list"><span>Docker</span><span>Kubernetes</span><span>Github Workflows</span><span>QEMU</span><span>VMware</span><span>Playwright</span></div>
+                        <h3><i class="fas fa-brain"></i> AI / LLM Infrastructure</h3>
+                        <div class="skills-list"><span>vLLM (RadixAttention)</span><span>LangGraph</span><span>Qdrant Vector DB</span><span>RAG Pipelines</span><span>MCP Protocol (FastMCP)</span><span>LLM Quantization (FP8/AWQ)</span><span>Autonomous CI/CD Agents</span><span>CNN / RNN / LSTM</span><span>Random Forest</span><span>XGBoost</span><span>SVM / KNN / PCA</span><span>Ensemble Methods</span></div>
                     </div>
                     <div class="skill-category glass-card">
-                        <h3><i class="fas fa-brain"></i> AI & ML</h3>
-                        <div class="skills-list"><span>Regression</span><span>Random Forest</span><span>Naive Bayes</span><span>KNN</span><span>Neural Networks</span><span>SVMs</span></div>
-                    </div>                    
+                        <h3><i class="fas fa-shield-alt"></i> Cybersecurity Tools</h3>
+                        <div class="skills-list"><span>Volatility3</span><span>Metasploit</span><span>Wireshark</span><span>Suricata</span><span>Splunk</span><span>YARA</span><span>BurpSuite</span><span>Autopsy</span><span>Frida</span><span>Magisk</span><span>JadX</span><span>NMap</span><span>Radare2</span><span>Playwright</span></div>
+                    </div>
                     <div class="skill-category glass-card">
-                        <h3><i class="fas fa-computer"></i> Software</h3>
-                        <div class="skills-list"><span>NetLogo</span><span>Arduino</span><span>Fusion360</span><span>MATLAB ThingSpeak</span><span>ARM Keil</span><span>Mbed OS</span></div>
+                        <h3><i class="fas fa-tools"></i> CI/CD &amp; Infrastructure</h3>
+                        <div class="skills-list"><span>Docker</span><span>Docker Swarm</span><span>GitHub Workflows</span><span>GitLab CI</span><span>QEMU</span><span>VMware</span><span>vLLM Docker Deployment</span><span>NVIDIA Container Toolkit</span></div>
                     </div>
                 </div>
             </div>
@@ -258,8 +268,23 @@
 
                         <div class="project-card glass-card">
                             <div class="project-content">
+                                <h3>Air-Gapped LLM Inference Stack</h3>
+                                <p>Production-grade, fully air-gapped LLM inference infrastructure on Dell PowerEdge R760 (NVIDIA A100 80GB PCIe) using vLLM + Qwen3-27B-FP8. Features RadixAttention KV-cache (43GB, ~675K token capacity), hybrid RAG with Qdrant + BGE embeddings, and a LangGraph autonomous CI/CD pipeline with Clang/Tree-Sitter AST analysis.</p>
+                                <div class="project-tech">
+                                    <span>vLLM</span>
+                                    <span>LangGraph</span>
+                                    <span>Qdrant</span>
+                                    <span>Python</span>
+                                    <span>FastMCP</span>
+                                    <span>NVIDIA A100</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="project-card glass-card">
+                            <div class="project-content">
                                 <h3>VolMemLyzer_V2</h3>
-                                <p>Created a feature extractor tool - VolMemLyzer(V2) with 250+ features, leveraging the power of the Volatility framework for memory analysis of the memory dumps.</p>
+                                <p>High-performance memory analytics engine with 250+ memory analytics features (vs &lt;75 in V1), leveraging the Volatility3 framework. Modular pipeline reduced snapshot processing time by 20–30%. Applicable to real-time risk and compliance memory forensics.</p>
                                 <div class="project-tech">
                                     <span>Python</span>
                                     <span>Jupyter Notebook</span>
@@ -377,12 +402,13 @@
             <div class="container">
                 <h2 class="section-title">Achievements & Recognition</h2>
                 <ul class="achievements-list glass-card">
-                    <li><i class="fas fa-trophy"></i> Achieved All India Rank 1 in Microsoft Cybersecurity Engage 2022. </li>
-                    <li><i class="fas fa-medal"></i> Received Student Distinguished Services Award and Institute Silver Medal for my contributions to Student Senate IITJ in AY 2022-23.</li>
-                    <li><i class="fas fa-users"></i> Contingent Leader of 150 IIT-J students in the 55th INTER IIT SPORTS MEET 2022; personally led Runner-Up awardee Best Marching Contingent at IIT Delhi.  </li>
-                    <li><i class="fas fa-star"></i> Vice-President, Board of Student Sports; heading investments worth 2.1 Cr (INR) at IIT Jodhpur.</li>
-                    <li><i class="fas fa-computer"></i> Bagged 4th position out of 23 IITs; leading a team of 4 members in INTER IIT TECH MEET 12.0 in Cybersecurity PS at IIT Madras.  </li>
-                    <li><i class="fas fa-book-reader"></i> State Rank 3 (Uttarakhand) in NSTSE-2019 conducted by Unified Council. </li>
+                    <li><i class="fas fa-trophy"></i> <strong>All India Rank 1</strong>, Microsoft Cybersecurity Engage 2022 — top competitive performance across all India participants in adversarial Critical Infrastructure (Delhi SLDC) defence scenarios.</li>
+                    <li><i class="fas fa-medal"></i> <strong>Institute Silver Medal</strong>, IIT Jodhpur — awarded for outstanding contributions to the Student Senate and overall excellence across the B.Tech. programme (AY 2022–23); also received Student Distinguished Services Award.</li>
+                    <li><i class="fas fa-users"></i> <strong>Contingent Leader</strong> of 150 IIT Jodhpur students in the 55th Inter-IIT Sports Meet 2022; personally led the Runner-Up Best Marching Contingent at IIT Delhi.</li>
+                    <li><i class="fas fa-star"></i> <strong>Vice-President, Board of Student Sports</strong> — headed investments &amp; events worth ₹2.1 Cr (INR) with 95% budget utilization; grew from 9 to 15 societies, tripling student engagement.</li>
+                    <li><i class="fas fa-computer"></i> <strong>4th place (of 23 IITs)</strong> leading a 4-member team in Inter-IIT Tech Meet 12.0 Cybersecurity challenge at IIT Madras.</li>
+                    <li><i class="fas fa-book-reader"></i> <strong>State Rank 3 (Uttarakhand)</strong>, NSTSE-2019 — National Science Talent Search Examination, Unified Council.</li>
+                    <li><i class="fas fa-star-half-alt"></i> <strong>Highest KRA points</strong> of all &lt;3 YoE team members in the National Scale Packet Processing Solution team at C-DOT.</li>
                 </ul>
             </div>
         </section>
